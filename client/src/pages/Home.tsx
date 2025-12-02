@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { calculateMortgage, MortgageResult } from "@/lib/mortgage-calculator";
-import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, MessageSquare } from "lucide-react";
+import PWAInstallButton from "@/components/PWAInstallButton";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -178,10 +179,11 @@ export default function Home() {
               <p className="text-xs text-muted-foreground">溫暖成家，理性規劃</p>
             </div>
           </div>
-          <Badge variant="secondary" className="hidden md:flex items-center gap-1.5 px-3 py-1">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span className="text-xs font-medium">專業試算</span>
-          </Badge>
+          <PWAInstallButton
+            variant="outline"
+            size="sm"
+            className="border-[#5F9EA0] text-[#5F9EA0] hover:bg-[#5F9EA0] hover:text-white transition-colors"
+          />
         </div>
       </header>
 
@@ -509,7 +511,7 @@ export default function Home() {
 
             {/* Info Accordion */}
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="formula" className="border rounded-lg px-4 bg-white dark:bg-slate-950">
+              <AccordionItem value="formula" className="border-2 border-[#5F9EA0]/30 rounded-lg px-4 bg-white dark:bg-slate-950 shadow-sm">
                 <AccordionTrigger className="hover:no-underline">
                   <div className="flex items-center gap-2 text-left">
                     <InfoIcon className="h-4 w-4 text-primary shrink-0" />
@@ -688,7 +690,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="mt-16 py-8 border-t bg-slate-50/50 dark:bg-slate-950/50">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-3">
+        <div className="max-w-6xl mx-auto px-4 text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
             <img src="/logo.png" alt="窩算算" className="w-14 h-14 object-contain" />
             <div className="text-left">
@@ -696,6 +698,18 @@ export default function Home() {
               <p className="text-xs text-muted-foreground">溫暖成家，理性規劃</p>
             </div>
           </div>
+
+          {/* 意見回饋連結 */}
+          <a
+            href="https://forms.gle/hUiH3yusdAcZgjoQ8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#5F9EA0]/10 hover:bg-[#5F9EA0]/20 text-[#5F9EA0] hover:text-[#4A7C8C] transition-colors"
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span className="text-sm font-medium">窩算算 (WoCalc) 意見回饋</span>
+          </a>
+
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} WoCalc. All rights reserved.
           </p>
