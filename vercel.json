@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "name": "wocalc",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|svg|ico|webp|css|js))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_ANALYTICS_ENDPOINT": "@wocalc-analytics-endpoint",
+    "VITE_ANALYTICS_WEBSITE_ID": "@wocalc-analytics-website-id"
+  },
+  "github": {
+    "silent": true
+  }
+}
