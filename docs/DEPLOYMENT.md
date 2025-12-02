@@ -2,9 +2,6 @@
 
 ## 部署資訊
 
-### Production URL
-🌐 **https://wocalc-wuzs2fxlr-sammys-projects-34ff7f13.vercel.app**
-
 ### Deployment Platform
 - **平台**: Vercel
 - **專案名稱**: wocalc

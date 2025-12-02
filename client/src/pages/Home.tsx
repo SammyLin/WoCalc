@@ -192,7 +192,7 @@ export default function Home() {
             精準計算您的<span className="text-primary">購屋能力</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            基於銀行真實審核標準，提供專業的收支比分析與核貸評估
+            模擬銀行審核標準，提供專業的收支比分析與核貸評估
           </p>
         </div>
 
