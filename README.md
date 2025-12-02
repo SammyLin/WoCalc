@@ -44,8 +44,8 @@
 
 ### 環境需求
 
-- Node.js >= 18
-- pnpm >= 8
+- Node.js >= 18 (建議使用 v23+)
+- pnpm >= 9 (建議使用 v9.15+)
 
 ### 安裝與啟動
 
@@ -67,10 +67,13 @@ pnpm preview
 
 ```
 WoCalc/
+├── .github/
+│   └── workflows/       # GitHub Actions CI/CD
+│       └── deploy.yml   # 自動部署至 Cloudflare Pages
 ├── client/              # 前端應用程式
 │   ├── public/          # 靜態資源
 │   │   ├── logo.png
-│   │   ├── pwa-*.png
+│   │   ├── pwa-*.png   # PWA 圖示
 │   │   └── images/
 │   └── src/
 │       ├── components/  # React 元件
@@ -86,8 +89,15 @@ WoCalc/
 │       │   └── Home.tsx
 │       ├── App.tsx
 │       └── main.tsx
+├── docs/                # 專案文件
+│   ├── CHANGELOG.md
+│   ├── DEPLOYMENT.md
+│   └── GITHUB_ACTIONS_SETUP.md
 ├── server/              # 後端服務 (Express)
+│   └── index.ts
 ├── shared/              # 共享代碼
+│   └── const.ts
+├── wrangler.toml        # Cloudflare Pages 配置
 └── vite.config.ts       # Vite 配置
 ```
 
@@ -120,11 +130,47 @@ WoCalc/
 
 ## 部署
 
-專案支援以下部署方式：
+### GitHub Actions 自動部署 (推薦)
 
-- **靜態網站託管**：Vercel / Netlify / GitHub Pages
-- **Docker**：包含完整的 Node.js 後端
-- **PWA 安裝**：可作為獨立應用程式
+本專案已設定 GitHub Actions 自動部署至 Cloudflare Pages：
+
+- 推送至 `main` 分支時自動觸發生產環境部署
+- Pull Request 時建立預覽環境
+- 需要在 GitHub Secrets 設定：
+  - `CLOUDFLARE_API_TOKEN`：Cloudflare API Token
+  - `CLOUDFLARE_ACCOUNT_ID`：Cloudflare Account ID
+
+詳細設定說明請參考 [`docs/GITHUB_ACTIONS_SETUP.md`](docs/GITHUB_ACTIONS_SETUP.md)
+
+### 手動部署至 Cloudflare Pages
+
+#### 首次部署
+
+1. 登入 Cloudflare 並取得 API Token：
+   ```bash
+   pnpm wrangler login
+   ```
+
+2. 部署專案：
+   ```bash
+   pnpm deploy
+   ```
+
+#### 本地預覽 Cloudflare Pages
+
+建構後在本地測試 Cloudflare Pages 環境：
+
+```bash
+pnpm build
+pnpm cf:dev
+```
+
+### PWA 支援
+
+本應用支援 PWA (Progressive Web App)，使用者可以：
+- 在瀏覽器中點選「加入主畫面」
+- 作為獨立應用程式使用
+- 離線瀏覽基本功能
 
 ## 授權
 

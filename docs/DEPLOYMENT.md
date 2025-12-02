@@ -3,11 +3,12 @@
 ## 部署資訊
 
 ### Deployment Platform
-- **平台**: Vercel
+- **平台**: Cloudflare Pages
 - **專案名稱**: wocalc
 - **Framework**: Vite + React
 - **Build Command**: `pnpm build`
-- **Output Directory**: `dist`
+- **Output Directory**: `dist/public`
+- **預設 URL**: https://wocalc.pages.dev
 
 ---
 
@@ -35,10 +36,8 @@ make format       # 格式化程式碼
 ### 部署指令
 
 ```bash
-make deploy       # 部署到 Vercel（預覽環境）
-make deploy-prod  # 部署到 Vercel（正式環境）
-make status       # 檢查部署狀態
-make logs         # 查看部署日誌
+make deploy       # 部署到 Cloudflare Pages
+make cf-dev       # 本地預覽 Cloudflare Pages 環境
 ```
 
 ### 維護指令
@@ -56,28 +55,22 @@ make clean        # 清理建置檔案
 在專案根目錄建立 `.env` 檔案：
 
 ```bash
-# Analytics Configuration
+# Analytics Configuration (Optional)
 VITE_ANALYTICS_ENDPOINT=https://your-umami-instance.com
-VITE_ANALYTICS_WEBSITE_ID=your-website-id-here
+VITE_ANALYTICS_WEBSITE_ID=your-website-id
 
-# Amplitude Analytics
-VITE_AMPLITUDE_API_KEY=your-amplitude-api-key-here
+# Amplitude Analytics (Optional)
+VITE_AMPLITUDE_API_KEY=your-amplitude-key
 ```
 
-### Vercel 環境變數
+### Cloudflare Pages 環境變數
 
-在 Vercel Dashboard 中設定以下環境變數：
-
-1. 前往 [Vercel Dashboard](https://vercel.com/dashboard)
-2. 選擇 wocalc 專案
+1. 前往 [Cloudflare Pages Dashboard](https://dash.cloudflare.com/pages)
+2. 選擇你的專案
 3. 進入 Settings → Environment Variables
-4. 新增以下變數：
+4. 新增所需的環境變數
 
-| 變數名稱 | 說明 | 環境 |
-|---------|------|------|
-| `VITE_AMPLITUDE_API_KEY` | Amplitude API Key | Production, Preview |
-| `VITE_ANALYTICS_ENDPOINT` | Umami Analytics Endpoint | Production, Preview |
-| `VITE_ANALYTICS_WEBSITE_ID` | Umami Website ID | Production, Preview |
+**注意**: 所有 Vite 環境變數必須以 `VITE_` 開頭
 
 ---
 
@@ -86,22 +79,15 @@ VITE_AMPLITUDE_API_KEY=your-amplitude-api-key-here
 ### 提交變更
 
 ```bash
-# 檢查狀態
 git status
-
-# 新增檔案
 git add .
-
-# 提交變更
 git commit -m "feat: your feature description"
-
-# 推送到遠端
 git push origin main
 ```
 
 ### 提交訊息格式
 
-我們遵循 Conventional Commits 格式：
+遵循 Conventional Commits 格式：
 
 - `feat:` 新功能
 - `fix:` 修復 bug
@@ -115,59 +101,88 @@ git push origin main
 
 ## 部署流程
 
-### 自動部署
+### 自動部署（推薦）
 
-當推送到 `main` 分支時，Vercel 會自動建置並部署到正式環境。
+當推送到 `main` 分支時，GitHub Actions 會自動建置並部署到 Cloudflare Pages。
+
+**設定步驟**：參考 [GitHub Actions Setup](./GITHUB_ACTIONS_SETUP.md)
 
 ### 手動部署
 
-使用 Makefile 指令：
+#### 方法 1: 使用 Makefile
 
 ```bash
-# 部署到預覽環境
 make deploy
-
-# 部署到正式環境
-make deploy-prod
 ```
 
-或直接使用 Vercel CLI：
+#### 方法 2: 使用 npm script
 
 ```bash
-# 預覽部署
-vercel
+pnpm deploy
+```
 
-# 正式部署
-vercel --prod
+#### 方法 3: 使用 wrangler CLI
+
+```bash
+# 首次登入
+pnpm wrangler login
+
+# 建置專案
+pnpm build
+
+# 部署
+pnpm wrangler pages deploy dist/public --project-name=wocalc
 ```
 
 ---
 
-## Amplitude Analytics 設定
+## 自訂網域設定
+
+### 設定步驟
+
+1. 前往 Cloudflare Pages Dashboard
+2. 選擇專案
+3. 點擊「Custom domains」
+4. 添加你的網域（例如：`app.yourdomain.com`）
+5. 設定 DNS CNAME 記錄：
+   - Name: `app`（或你的子網域）
+   - Target: `wocalc.pages.dev`
+6. 等待 DNS 生效（5-10 分鐘）
+
+### 驗證設定
+
+```bash
+# 檢查 DNS
+dig your-domain.com CNAME +short
+```
+
+---
+
+## Amplitude Analytics 整合
 
 ### 功能特性
 
-我們整合了 Amplitude Analytics，具備以下自動追蹤功能：
+本專案整合了 Amplitude Analytics，具備以下自動追蹤：
 
-- ✅ Attribution tracking（來源追蹤）
-- ✅ File downloads（檔案下載）
-- ✅ Form interactions（表單互動）
-- ✅ Page views（頁面瀏覽）
-- ✅ Sessions（使用者工作階段）
-- ✅ Element interactions（元素互動）
+- ✅ 來源追蹤
+- ✅ 檔案下載
+- ✅ 表單互動
+- ✅ 頁面瀏覽
+- ✅ 使用者工作階段
+- ✅ 元素互動
 
 ### 使用方式
 
 ```typescript
 import { trackEvent, setUserProperties, trackPageView } from '@/lib/amplitude';
 
-// 追蹤自訂事件
+// 追蹤事件
 trackEvent('Button Clicked', { buttonName: 'Calculate' });
 
 // 設定使用者屬性
 setUserProperties({ plan: 'premium' });
 
-// 追蹤頁面瀏覽
+// 追蹤頁面
 trackPageView('Home Page');
 ```
 
@@ -177,32 +192,36 @@ trackPageView('Home Page');
 
 ### 部署失敗
 
-如果部署失敗，檢查：
-
-1. 建置是否成功：`make build`
-2. 環境變數是否正確設定
-3. 檢查 Vercel 部署日誌：`make logs`
+1. 檢查本地建置：`make build`
+2. 確認 GitHub Secrets 設定正確
+3. 查看 GitHub Actions 日誌
+4. 檢查 Cloudflare Pages Dashboard
 
 ### 本地開發問題
 
 ```bash
-# 清理快取和重新安裝
+# 清理並重新安裝
 make clean
 make install
-
-# 重啟開發伺服器
 make dev
 ```
+
+### 環境變數未生效
+
+- 環境變數名稱必須以 `VITE_` 開頭
+- 環境變數在建置時注入（非運行時）
+- 修改後需要重新建置
 
 ---
 
 ## 相關連結
 
-- 📦 [Vercel Dashboard](https://vercel.com/dashboard)
-- 📊 [Amplitude Dashboard](https://analytics.amplitude.com/)
-- 📚 [專案 GitHub Repository](#)（待補充）
-- 🎨 [Figma 設計稿](#)（待補充）
+- 📦 [Cloudflare Pages Dashboard](https://dash.cloudflare.com/pages)
+- 📚 [GitHub Actions Setup](./GITHUB_ACTIONS_SETUP.md)
+- 📖 [Cloudflare Pages 文件](https://developers.cloudflare.com/pages/)
+- 📖 [Wrangler CLI 文件](https://developers.cloudflare.com/workers/wrangler/)
 
 ---
 
 **最後更新**: 2025-12-02
+**部署平台**: Cloudflare Pages

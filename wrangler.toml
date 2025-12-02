@@ -1,0 +1,5 @@
+name = "wocalc"
+compatibility_date = "2024-12-02"
+
+# Cloudflare Pages Configuration
+pages_build_output_dir = "dist/public"

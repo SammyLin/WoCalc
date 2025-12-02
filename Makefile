@@ -1,4 +1,4 @@
-.PHONY: help install dev build preview clean test lint format deploy deploy-prod status logs
+.PHONY: help install dev build preview clean test lint format deploy cf-dev
 
 # Default target
 help:
@@ -17,10 +17,8 @@ help:
 	@echo "  make format       - Format code"
 	@echo ""
 	@echo "Deployment:"
-	@echo "  make deploy       - Deploy to Vercel (preview)"
-	@echo "  make deploy-prod  - Deploy to Vercel (production)"
-	@echo "  make status       - Check deployment status"
-	@echo "  make logs         - View deployment logs"
+	@echo "  make deploy       - Deploy to Cloudflare Pages"
+	@echo "  make cf-dev       - Preview Cloudflare Pages locally"
 	@echo ""
 	@echo "Maintenance:"
 	@echo "  make clean        - Clean build files"
@@ -67,28 +65,17 @@ clean:
 	rm -rf dist/
 	rm -rf .vite/
 	rm -rf node_modules/.vite/
+	rm -rf .wrangler/
 	@echo "Clean complete!"
 
-# Deploy to Vercel (preview)
+# Deploy to Cloudflare Pages
 deploy:
-	@echo "Deploying to Vercel (preview)..."
-	@which vercel > /dev/null || (echo "Error: Vercel CLI not found. Install with: pnpm add -g vercel" && exit 1)
-	vercel
+	@echo "Deploying to Cloudflare Pages..."
+	@which wrangler > /dev/null || (echo "Error: Wrangler not found. Install with: pnpm add -D wrangler" && exit 1)
+	pnpm deploy
 
-# Deploy to Vercel (production)
-deploy-prod:
-	@echo "Deploying to Vercel (production)..."
-	@which vercel > /dev/null || (echo "Error: Vercel CLI not found. Install with: pnpm add -g vercel" && exit 1)
-	vercel --prod
-
-# Check deployment status
-status:
-	@echo "Checking deployment status..."
-	@which vercel > /dev/null || (echo "Error: Vercel CLI not found. Install with: pnpm add -g vercel" && exit 1)
-	vercel ls
-
-# View deployment logs
-logs:
-	@echo "Viewing deployment logs..."
-	@which vercel > /dev/null || (echo "Error: Vercel CLI not found. Install with: pnpm add -g vercel" && exit 1)
-	vercel logs
+# Preview Cloudflare Pages locally
+cf-dev:
+	@echo "Starting Cloudflare Pages local preview..."
+	@which wrangler > /dev/null || (echo "Error: Wrangler not found. Install with: pnpm add -D wrangler" && exit 1)
+	pnpm cf:dev
