@@ -224,7 +224,7 @@ export default function Home() {
                       <div className="relative">
                         <Input
                           id="income"
-                          placeholder="例如：80,000"
+                          placeholder="例如：22,000"
                           type="text"
                           value={formatNumber(income)}
                           onChange={(e) => {
@@ -248,7 +248,7 @@ export default function Home() {
                         <div className="relative">
                           <Input
                             id="existingLoan"
-                            placeholder="15,000"
+                            placeholder="1,000"
                             type="text"
                             value={formatNumber(existingLoanPayment)}
                             onChange={(e) => setExistingLoanPayment(e.target.value.replace(/,/g, ''))}
@@ -266,7 +266,7 @@ export default function Home() {
                         <div className="relative">
                           <Input
                             id="livingExpenses"
-                            placeholder="20,000"
+                            placeholder="1,000"
                             type="text"
                             value={formatNumber(livingExpenses)}
                             onChange={(e) => setLivingExpenses(e.target.value.replace(/,/g, ''))}
@@ -319,7 +319,7 @@ export default function Home() {
                         <div className="relative">
                           <Input
                             id="interestRate"
-                            placeholder="2.185"
+                            placeholder="2.6"
                             type="number"
                             step="0.001"
                             value={interestRate}
@@ -438,7 +438,7 @@ export default function Home() {
                               <div className="relative">
                                 <Input
                                   id="guarantorIncome"
-                                  placeholder="50,000"
+                                  placeholder="22,000"
                                   type="text"
                                   value={formatNumber(guarantorIncome)}
                                   onChange={(e) => setGuarantorIncome(e.target.value.replace(/,/g, ''))}
