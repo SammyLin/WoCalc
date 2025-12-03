@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { calculateMortgage, MortgageResult } from "@/lib/mortgage-calculator";
 import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, MessageSquare } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -14,23 +15,71 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+interface FormData {
+  income: string;
+  existingLoanPayment: string;
+  livingExpenses: string;
+  housePrice: string;
+  loanTerm: string;
+  interestRate: string;
+  gracePeriod: string;
+  hasOtherLoan: boolean;
+  hasGuarantor: boolean;
+  guarantorIncome: string;
+  guarantorExistingLoan: string;
+  guarantorLivingExpenses: string;
+}
+
 export default function Home() {
   // Step State
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Form State
-  const [income, setIncome] = useState("");
-  const [existingLoanPayment, setExistingLoanPayment] = useState("");
-  const [livingExpenses, setLivingExpenses] = useState("");
-  const [housePrice, setHousePrice] = useState("");
-  const [loanTerm, setLoanTerm] = useState("30");
-  const [interestRate, setInterestRate] = useState("2.185");
-  const [gracePeriod, setGracePeriod] = useState("0");
-  const [hasOtherLoan, setHasOtherLoan] = useState(false);
-  const [hasGuarantor, setHasGuarantor] = useState(false);
-  const [guarantorIncome, setGuarantorIncome] = useState("");
-  const [guarantorExistingLoan, setGuarantorExistingLoan] = useState("");
-  const [guarantorLivingExpenses, setGuarantorLivingExpenses] = useState("");
+  // Form State with localStorage
+  const [formData, setFormData] = useLocalStorage<FormData>("wocalc-form-data", {
+    income: "",
+    existingLoanPayment: "",
+    livingExpenses: "",
+    housePrice: "",
+    loanTerm: "30",
+    interestRate: "2.185",
+    gracePeriod: "0",
+    hasOtherLoan: false,
+    hasGuarantor: false,
+    guarantorIncome: "",
+    guarantorExistingLoan: "",
+    guarantorLivingExpenses: "",
+  });
+
+  const [income, setIncome] = useState(formData.income);
+  const [existingLoanPayment, setExistingLoanPayment] = useState(formData.existingLoanPayment);
+  const [livingExpenses, setLivingExpenses] = useState(formData.livingExpenses);
+  const [housePrice, setHousePrice] = useState(formData.housePrice);
+  const [loanTerm, setLoanTerm] = useState(formData.loanTerm);
+  const [interestRate, setInterestRate] = useState(formData.interestRate);
+  const [gracePeriod, setGracePeriod] = useState(formData.gracePeriod);
+  const [hasOtherLoan, setHasOtherLoan] = useState(formData.hasOtherLoan);
+  const [hasGuarantor, setHasGuarantor] = useState(formData.hasGuarantor);
+  const [guarantorIncome, setGuarantorIncome] = useState(formData.guarantorIncome);
+  const [guarantorExistingLoan, setGuarantorExistingLoan] = useState(formData.guarantorExistingLoan);
+  const [guarantorLivingExpenses, setGuarantorLivingExpenses] = useState(formData.guarantorLivingExpenses);
+
+  // Save to localStorage whenever form data changes
+  useEffect(() => {
+    setFormData({
+      income,
+      existingLoanPayment,
+      livingExpenses,
+      housePrice,
+      loanTerm,
+      interestRate,
+      gracePeriod,
+      hasOtherLoan,
+      hasGuarantor,
+      guarantorIncome,
+      guarantorExistingLoan,
+      guarantorLivingExpenses,
+    });
+  }, [income, existingLoanPayment, livingExpenses, housePrice, loanTerm, interestRate, gracePeriod, hasOtherLoan, hasGuarantor, guarantorIncome, guarantorExistingLoan, guarantorLivingExpenses]);
 
   // Validation State
   const [errors, setErrors] = useState<{income?: string; housePrice?: string}>({});
@@ -137,7 +186,7 @@ export default function Home() {
   // Step indicator component
   const StepIndicator = () => (
     <div className="flex items-center justify-center gap-3 mb-8">
-      {[1, 2, 3].map((step) => (
+      {[1, 2].map((step) => (
         <div key={step} className="flex items-center">
           <div className={`flex items-center gap-2 ${step > 1 ? 'ml-3' : ''}`}>
             <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 font-semibold transition-all duration-300 ${
@@ -152,10 +201,10 @@ export default function Home() {
             <span className={`text-sm font-medium hidden sm:inline ${
               currentStep >= step ? 'text-foreground' : 'text-muted-foreground'
             }`}>
-              {step === 1 ? '基本資料' : step === 2 ? '房貸條件' : '進階選項'}
+              {step === 1 ? '基本資料' : '房貸條件'}
             </span>
           </div>
-          {step < 3 && (
+          {step < 2 && (
             <div className={`h-0.5 w-12 sm:w-20 ml-3 transition-all duration-300 ${
               currentStep > step ? 'bg-primary' : 'bg-slate-300 dark:bg-slate-700'
             }`} />
@@ -290,7 +339,7 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Step 2: House Info */}
+                {/* Step 2: House Info + Advanced Options */}
                 {currentStep === 2 && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                     <div className="space-y-2">
@@ -366,32 +415,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="flex gap-3 mt-4">
-                      <Button
-                        onClick={handlePrev}
-                        variant="outline"
-                        size="lg"
-                        className="flex-1 h-12 text-lg"
-                      >
-                        <ArrowLeft className="mr-2 h-5 w-5" />
-                        上一步
-                      </Button>
-                      <Button
-                        onClick={handleNext}
-                        size="lg"
-                        className="flex-1 h-12 text-lg font-semibold"
-                      >
-                        下一步：進階選項
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Step 3: Advanced Options */}
-                {currentStep === 3 && (
-                  <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                    {/* Second Home */}
+                    {/* Advanced Options - Second Home */}
                     <div className="flex items-start justify-between p-4 rounded-lg border bg-slate-50/50 dark:bg-slate-900/50">
                       <div className="flex-1 space-y-1">
                         <Label htmlFor="hasOtherLoan" className="text-base font-medium cursor-pointer">
@@ -409,7 +433,7 @@ export default function Home() {
                       />
                     </div>
 
-                    {/* Guarantor */}
+                    {/* Advanced Options - Guarantor */}
                     <div className="space-y-4">
                       <div className="flex items-start justify-between p-4 rounded-lg border bg-slate-50/50 dark:bg-slate-900/50">
                         <div className="flex-1 space-y-1">
@@ -618,18 +642,82 @@ export default function Home() {
                             {result.monthlyPayment.toLocaleString()}
                           </div>
                           <div className="text-xs text-muted-foreground mt-1">本息攤還</div>
+                          {(() => {
+                            const monthlyRate = parseFloat(interestRate) / 100 / 12;
+                            const interestPortion = Math.round(result.maxLoanAmount * monthlyRate);
+                            const principalPortion = result.monthlyPayment - interestPortion;
+                            return (
+                              <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                                <div className="flex justify-between items-center text-[10px] text-muted-foreground">
+                                  <span>本金</span>
+                                  <span className="font-medium">{principalPortion.toLocaleString()}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px] text-muted-foreground">
+                                  <span>利息</span>
+                                  <span className="font-medium">{interestPortion.toLocaleString()}</span>
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
 
-                        {result.monthlyPaymentGrace > 0 && (
+                        {result.monthlyPaymentGrace > 0 ? (
                           <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
                             <div className="text-xs text-muted-foreground mb-1">寬限期內</div>
                             <div className="text-2xl font-bold text-green-600">
                               {result.monthlyPaymentGrace.toLocaleString()}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">僅繳利息</div>
+                            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                              <div className="flex justify-between items-center text-[10px] text-muted-foreground">
+                                <span>寬限期限</span>
+                                <span className="font-medium">{gracePeriod} 年</span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                            <div className="text-xs text-muted-foreground mb-1">房屋總價</div>
+                            <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">
+                              {(parseFloat(housePrice)).toLocaleString()}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">萬元</div>
+                            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                              <div className="flex justify-between items-center text-[10px] text-muted-foreground">
+                                <span>貸款成數</span>
+                                <span className="font-medium">{(result.loanPercentage * 100).toFixed(0)}%</span>
+                              </div>
+                              <div className="flex justify-between items-center text-[10px] text-muted-foreground">
+                                <span>自備款</span>
+                                <span className="font-medium">{((parseFloat(housePrice) * 10000 - result.maxLoanAmount) / 10000).toLocaleString()} 萬</span>
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
+
+                      {result.monthlyPaymentGrace > 0 && (
+                        <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                          <div className="flex justify-between items-center">
+                            <div className="space-y-1">
+                              <div className="text-xs text-muted-foreground">房屋總價</div>
+                              <div className="text-lg font-bold text-slate-600 dark:text-slate-400">
+                                {(parseFloat(housePrice)).toLocaleString()} 萬元
+                              </div>
+                            </div>
+                            <div className="text-right space-y-0.5">
+                              <div className="flex justify-between items-center gap-4 text-[10px] text-muted-foreground">
+                                <span>自備款</span>
+                                <span className="font-medium">{((parseFloat(housePrice) * 10000 - result.maxLoanAmount) / 10000).toLocaleString()} 萬</span>
+                              </div>
+                              <div className="flex justify-between items-center gap-4 text-[10px] text-muted-foreground">
+                                <span>貸款成數</span>
+                                <span className="font-medium">{(result.loanPercentage * 100).toFixed(0)}%</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Ratio Analysis */}
