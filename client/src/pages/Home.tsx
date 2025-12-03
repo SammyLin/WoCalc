@@ -665,7 +665,7 @@ export default function Home() {
                           })()}
                         </div>
 
-                        {result.monthlyPaymentGrace > 0 ? (
+                        {parseFloat(gracePeriod) > 0 ? (
                           <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
                             <div className="text-xs text-muted-foreground mb-1">寬限期內</div>
                             <div className="text-2xl font-bold text-green-600">
@@ -700,7 +700,7 @@ export default function Home() {
                         )}
                       </div>
 
-                      {result.monthlyPaymentGrace > 0 && (
+                      {parseFloat(gracePeriod) > 0 && (
                         <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border">
                           <div className="flex justify-between items-center">
                             <div className="space-y-1">
