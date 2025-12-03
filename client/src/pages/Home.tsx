@@ -247,7 +247,7 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span>資料自動儲存於瀏覽器，重新整理也不怕遺失</span>
+            <span>資料自動儲存於瀏覽器本地，不會上傳伺服器</span>
           </div>
         </div>
 
