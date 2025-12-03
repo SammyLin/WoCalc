@@ -41,7 +41,7 @@ export default function Home() {
     livingExpenses: "",
     housePrice: "",
     loanTerm: "30",
-    interestRate: "2.185",
+    interestRate: "2.6",
     gracePeriod: "0",
     hasOtherLoan: false,
     hasGuarantor: false,
