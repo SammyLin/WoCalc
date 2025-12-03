@@ -536,49 +536,6 @@ export default function Home() {
                 )}
               </CardContent>
             </Card>
-
-            {/* Info Accordion */}
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="formula" className="border-2 border-[#5F9EA0]/30 rounded-lg px-4 bg-white dark:bg-slate-950 shadow-sm">
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="flex items-center gap-2 text-left">
-                    <InfoIcon className="h-4 w-4 text-primary shrink-0" />
-                    <span className="font-medium">計算公式與審核標準</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="pt-4 pb-6">
-                  <div className="space-y-4 text-sm text-muted-foreground">
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">收支比定義</h4>
-                      <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border font-mono text-center text-primary font-semibold">
-                        收支比 = (總月收入 / 總月支出) × 100%
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">核貸成數調整</h4>
-                      <ul className="space-y-2">
-                        <li className="flex justify-between items-center p-2 rounded bg-green-50 dark:bg-green-950/20">
-                          <span>收支比 ≥ 200%</span>
-                          <Badge className="bg-green-600">正常核貸</Badge>
-                        </li>
-                        <li className="flex justify-between items-center p-2 rounded bg-yellow-50 dark:bg-yellow-950/20">
-                          <span>180% ~ 200%</span>
-                          <Badge className="bg-yellow-600">減 0.5 成</Badge>
-                        </li>
-                        <li className="flex justify-between items-center p-2 rounded bg-orange-50 dark:bg-orange-950/20">
-                          <span>160% ~ 180%</span>
-                          <Badge className="bg-orange-600">減 1 成</Badge>
-                        </li>
-                        <li className="flex justify-between items-center p-2 rounded bg-red-50 dark:bg-red-950/20">
-                          <span>收支比 &lt; 160%</span>
-                          <Badge className="bg-red-600">大幅調降</Badge>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
           </div>
 
           {/* Right: Result Display */}
@@ -765,6 +722,49 @@ export default function Home() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Info Accordion - Below Results */}
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="formula" className="border-2 border-[#5F9EA0]/30 rounded-lg px-4 bg-white dark:bg-slate-950 shadow-sm">
+                    <AccordionTrigger className="hover:no-underline">
+                      <div className="flex items-center gap-2 text-left">
+                        <InfoIcon className="h-4 w-4 text-primary shrink-0" />
+                        <span className="font-medium">計算公式與審核標準</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-4 pb-6">
+                      <div className="space-y-4 text-sm text-muted-foreground">
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">收支比定義</h4>
+                          <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border font-mono text-center text-primary font-semibold">
+                            收支比 = (總月收入 / 總月支出) × 100%
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">核貸成數調整</h4>
+                          <ul className="space-y-2">
+                            <li className="flex justify-between items-center p-2 rounded bg-green-50 dark:bg-green-950/20">
+                              <span>收支比 ≥ 200%</span>
+                              <Badge className="bg-green-600">正常核貸</Badge>
+                            </li>
+                            <li className="flex justify-between items-center p-2 rounded bg-yellow-50 dark:bg-yellow-950/20">
+                              <span>180% ~ 200%</span>
+                              <Badge className="bg-yellow-600">減 0.5 成</Badge>
+                            </li>
+                            <li className="flex justify-between items-center p-2 rounded bg-orange-50 dark:bg-orange-950/20">
+                              <span>160% ~ 180%</span>
+                              <Badge className="bg-orange-600">減 1 成</Badge>
+                            </li>
+                            <li className="flex justify-between items-center p-2 rounded bg-red-50 dark:bg-red-950/20">
+                              <span>收支比 &lt; 160%</span>
+                              <Badge className="bg-red-600">大幅調降</Badge>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             ) : (
               <div className="hidden lg:flex h-96 items-center justify-center rounded-xl border-2 border-dashed bg-slate-50/50 dark:bg-slate-900/50">
