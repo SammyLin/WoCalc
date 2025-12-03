@@ -245,6 +245,10 @@ export default function Home() {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             模擬銀行審核標準，提供專業的收支比分析與核貸評估
           </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span>資料自動儲存於瀏覽器，重新整理也不怕遺失</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -325,93 +329,6 @@ export default function Home() {
                           />
                           <span className="absolute right-3 top-3 text-sm text-muted-foreground">元</span>
                         </div>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={handleNext}
-                      size="lg"
-                      className="w-full mt-4 h-12 text-lg font-semibold"
-                    >
-                      下一步：房貸條件
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </div>
-                )}
-
-                {/* Step 2: House Info + Advanced Options */}
-                {currentStep === 2 && (
-                  <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                    <div className="space-y-2">
-                      <Label htmlFor="housePrice" className="flex items-center gap-2 text-base font-medium">
-                        房屋總價 <Badge variant="outline" className="text-xs">必填</Badge>
-                      </Label>
-                      <div className="relative">
-                        <Input
-                          id="housePrice"
-                          placeholder="例如：1,500"
-                          type="text"
-                          value={formatNumber(housePrice)}
-                          onChange={(e) => {
-                            const value = e.target.value.replace(/,/g, '');
-                            setHousePrice(value);
-                            if (errors.housePrice) setErrors({...errors, housePrice: undefined});
-                          }}
-                          className={`h-12 text-lg pr-12 ${errors.housePrice ? "border-red-500" : ""}`}
-                        />
-                        <span className="absolute right-4 top-3.5 text-sm text-muted-foreground font-medium">萬元</span>
-                      </div>
-                      {errors.housePrice && <p className="text-sm text-red-500">{errors.housePrice}</p>}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="interestRate" className="text-sm">房貸利率</Label>
-                        <div className="relative">
-                          <Input
-                            id="interestRate"
-                            placeholder="2.6"
-                            type="number"
-                            step="0.001"
-                            value={interestRate}
-                            onChange={(e) => setInterestRate(e.target.value)}
-                            className="h-11 pr-10"
-                          />
-                          <span className="absolute right-3 top-3 text-sm text-muted-foreground">%</span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="loanTerm" className="text-sm">貸款年限</Label>
-                        <div className="relative">
-                          <Input
-                            id="loanTerm"
-                            placeholder="30"
-                            type="number"
-                            value={loanTerm}
-                            onChange={(e) => setLoanTerm(e.target.value)}
-                            className="h-11 pr-10"
-                          />
-                          <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="gracePeriod" className="flex items-center gap-1.5 text-sm">
-                        寬限期
-                        <InfoTooltip content="寬限期內只需繳交利息，不用償還本金" />
-                      </Label>
-                      <div className="relative">
-                        <Input
-                          id="gracePeriod"
-                          placeholder="0"
-                          type="number"
-                          value={gracePeriod}
-                          onChange={(e) => setGracePeriod(e.target.value)}
-                          className="h-11 pr-10"
-                        />
-                        <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
                       </div>
                     </div>
 
@@ -507,6 +424,93 @@ export default function Home() {
                           </div>
                         </div>
                       )}
+                    </div>
+
+                    <Button
+                      onClick={handleNext}
+                      size="lg"
+                      className="w-full mt-4 h-12 text-lg font-semibold"
+                    >
+                      下一步：房貸條件
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </div>
+                )}
+
+                {/* Step 2: House Info */}
+                {currentStep === 2 && (
+                  <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                    <div className="space-y-2">
+                      <Label htmlFor="housePrice" className="flex items-center gap-2 text-base font-medium">
+                        房屋總價 <Badge variant="outline" className="text-xs">必填</Badge>
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="housePrice"
+                          placeholder="例如：1,500"
+                          type="text"
+                          value={formatNumber(housePrice)}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/,/g, '');
+                            setHousePrice(value);
+                            if (errors.housePrice) setErrors({...errors, housePrice: undefined});
+                          }}
+                          className={`h-12 text-lg pr-12 ${errors.housePrice ? "border-red-500" : ""}`}
+                        />
+                        <span className="absolute right-4 top-3.5 text-sm text-muted-foreground font-medium">萬元</span>
+                      </div>
+                      {errors.housePrice && <p className="text-sm text-red-500">{errors.housePrice}</p>}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="interestRate" className="text-sm">房貸利率</Label>
+                        <div className="relative">
+                          <Input
+                            id="interestRate"
+                            placeholder="2.6"
+                            type="number"
+                            step="0.001"
+                            value={interestRate}
+                            onChange={(e) => setInterestRate(e.target.value)}
+                            className="h-11 pr-10"
+                          />
+                          <span className="absolute right-3 top-3 text-sm text-muted-foreground">%</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="loanTerm" className="text-sm">貸款年限</Label>
+                        <div className="relative">
+                          <Input
+                            id="loanTerm"
+                            placeholder="30"
+                            type="number"
+                            value={loanTerm}
+                            onChange={(e) => setLoanTerm(e.target.value)}
+                            className="h-11 pr-10"
+                          />
+                          <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="gracePeriod" className="flex items-center gap-1.5 text-sm">
+                        寬限期
+                        <InfoTooltip content="寬限期內只需繳交利息，不用償還本金" />
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="gracePeriod"
+                          placeholder="0"
+                          type="number"
+                          value={gracePeriod}
+                          onChange={(e) => setGracePeriod(e.target.value)}
+                          className="h-11 pr-10"
+                        />
+                        <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
+                      </div>
                     </div>
 
                     <div className="flex gap-3 mt-4">
