@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { calculateMortgage, MortgageResult } from "@/lib/mortgage-calculator";
-import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, MessageSquare } from "lucide-react";
+import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, MessageSquare, RotateCcw } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
@@ -284,7 +284,13 @@ export default function Home() {
                           value={formatNumber(income)}
                           onChange={(e) => {
                             const value = e.target.value.replace(/,/g, '');
-                            setIncome(value);
+                            // 限制月收入最高 1000 萬元（合理上限）
+                            const numValue = parseInt(value);
+                            if (!isNaN(numValue) && numValue > 10000000) {
+                              setIncome("10000000");
+                            } else {
+                              setIncome(value);
+                            }
                             if (errors.income) setErrors({...errors, income: undefined});
                           }}
                           className={`h-12 text-lg pr-12 ${errors.income ? "border-red-500" : ""}`}
@@ -434,6 +440,19 @@ export default function Home() {
                       下一步：房貸條件
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
+
+                    {/* Clear Data Button */}
+                    <div className="pt-4 border-t border-slate-200 dark:border-slate-700 mt-6">
+                      <Button
+                        onClick={resetCalculator}
+                        variant="outline"
+                        size="sm"
+                        className="w-full text-muted-foreground hover:text-foreground border-dashed"
+                      >
+                        <RotateCcw className="mr-2 h-4 w-4" />
+                        重新清除所有紀錄
+                      </Button>
+                    </div>
                   </div>
                 )}
 
@@ -452,7 +471,13 @@ export default function Home() {
                           value={formatNumber(housePrice)}
                           onChange={(e) => {
                             const value = e.target.value.replace(/,/g, '');
-                            setHousePrice(value);
+                            // 限制房價最高 50 億元（合理上限）
+                            const numValue = parseInt(value);
+                            if (!isNaN(numValue) && numValue > 500000) {
+                              setHousePrice("500000");
+                            } else {
+                              setHousePrice(value);
+                            }
                             if (errors.housePrice) setErrors({...errors, housePrice: undefined});
                           }}
                           className={`h-12 text-lg pr-12 ${errors.housePrice ? "border-red-500" : ""}`}
@@ -471,12 +496,24 @@ export default function Home() {
                             placeholder="2.6"
                             type="number"
                             step="0.001"
+                            min="0"
+                            max="5"
                             value={interestRate}
-                            onChange={(e) => setInterestRate(e.target.value)}
+                            onChange={(e) => {
+                              const value = parseFloat(e.target.value);
+                              if (isNaN(value) || value < 0) {
+                                setInterestRate("0");
+                              } else if (value > 5) {
+                                setInterestRate("5");
+                              } else {
+                                setInterestRate(e.target.value);
+                              }
+                            }}
                             className="h-11 pr-10"
                           />
                           <span className="absolute right-3 top-3 text-sm text-muted-foreground">%</span>
                         </div>
+                        <p className="text-xs text-muted-foreground">範圍：0% - 5%</p>
                       </div>
 
                       <div className="space-y-2">
@@ -486,12 +523,24 @@ export default function Home() {
                             id="loanTerm"
                             placeholder="30"
                             type="number"
+                            min="1"
+                            max="40"
                             value={loanTerm}
-                            onChange={(e) => setLoanTerm(e.target.value)}
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value);
+                              if (isNaN(value) || value < 1) {
+                                setLoanTerm("1");
+                              } else if (value > 40) {
+                                setLoanTerm("40");
+                              } else {
+                                setLoanTerm(e.target.value);
+                              }
+                            }}
                             className="h-11 pr-10"
                           />
                           <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
                         </div>
+                        <p className="text-xs text-muted-foreground">範圍：1 - 40 年</p>
                       </div>
                     </div>
 
@@ -505,12 +554,24 @@ export default function Home() {
                           id="gracePeriod"
                           placeholder="0"
                           type="number"
+                          min="0"
+                          max="5"
                           value={gracePeriod}
-                          onChange={(e) => setGracePeriod(e.target.value)}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value);
+                            if (isNaN(value) || value < 0) {
+                              setGracePeriod("0");
+                            } else if (value > 5) {
+                              setGracePeriod("5");
+                            } else {
+                              setGracePeriod(e.target.value);
+                            }
+                          }}
                           className="h-11 pr-10"
                         />
                         <span className="absolute right-3 top-3 text-sm text-muted-foreground">年</span>
                       </div>
+                      <p className="text-xs text-muted-foreground">範圍：0 - 5 年</p>
                     </div>
 
                     <div className="flex gap-3 mt-4">
@@ -530,6 +591,19 @@ export default function Home() {
                       >
                         <TrendingUp className="mr-2 h-5 w-5" />
                         立即試算
+                      </Button>
+                    </div>
+
+                    {/* Clear Data Button */}
+                    <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+                      <Button
+                        onClick={resetCalculator}
+                        variant="outline"
+                        size="sm"
+                        className="w-full text-muted-foreground hover:text-foreground border-dashed"
+                      >
+                        <RotateCcw className="mr-2 h-4 w-4" />
+                        重新清除所有紀錄
                       </Button>
                     </div>
                   </div>
