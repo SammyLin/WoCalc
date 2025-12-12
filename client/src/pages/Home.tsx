@@ -284,10 +284,10 @@ export default function Home() {
                           value={formatNumber(income)}
                           onChange={(e) => {
                             const value = e.target.value.replace(/,/g, '');
-                            // 限制月收入最高 1000 萬元（合理上限）
+                            // 限制月收入最高 300 萬元（合理上限）
                             const numValue = parseInt(value);
-                            if (!isNaN(numValue) && numValue > 10000000) {
-                              setIncome("10000000");
+                            if (!isNaN(numValue) && numValue > 3000000) {
+                              setIncome("3000000");
                             } else {
                               setIncome(value);
                             }
@@ -471,10 +471,10 @@ export default function Home() {
                           value={formatNumber(housePrice)}
                           onChange={(e) => {
                             const value = e.target.value.replace(/,/g, '');
-                            // 限制房價最高 50 億元（合理上限）
+                            // 限制房價最高 5 億元（合理上限）
                             const numValue = parseInt(value);
-                            if (!isNaN(numValue) && numValue > 500000) {
-                              setHousePrice("500000");
+                            if (!isNaN(numValue) && numValue > 50000) {
+                              setHousePrice("50000");
                             } else {
                               setHousePrice(value);
                             }
