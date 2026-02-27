@@ -113,7 +113,7 @@ export default function PWAInstallButton({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#5F9EA0] to-[#4A7C8C] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
                 <Smartphone className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -126,7 +126,7 @@ export default function PWAInstallButton({
           <div className="space-y-6 py-4">
             {/* 步驟 1 */}
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center font-bold text-lg">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
                 1
               </div>
               <div className="flex-1 pt-1">
@@ -134,7 +134,7 @@ export default function PWAInstallButton({
                   點擊下方的「分享」按鈕
                 </p>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Share className="w-5 h-5 text-[#5F9EA0]" />
+                  <Share className="w-5 h-5 text-primary" />
                   <span>通常在畫面底部中央</span>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function PWAInstallButton({
 
             {/* 步驟 2 */}
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center font-bold text-lg">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
                 2
               </div>
               <div className="flex-1 pt-1">
@@ -150,7 +150,7 @@ export default function PWAInstallButton({
                   向下滾動找到「加入主畫面」
                 </p>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Plus className="w-5 h-5 text-[#5F9EA0]" />
+                  <Plus className="w-5 h-5 text-primary" />
                   <span>在分享選單中</span>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default function PWAInstallButton({
 
             {/* 步驟 3 */}
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center font-bold text-lg">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
                 3
               </div>
               <div className="flex-1 pt-1">

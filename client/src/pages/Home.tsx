@@ -194,7 +194,7 @@ export default function Home() {
                 ? 'bg-primary border-primary text-white'
                 : currentStep === step
                 ? 'bg-primary/10 border-primary text-primary scale-110'
-                : 'bg-slate-100 border-slate-300 text-slate-400 dark:bg-slate-800 dark:border-slate-700'
+                : 'bg-muted border-border text-muted-foreground'
             }`}>
               {currentStep > step ? <Check className="h-5 w-5" /> : step}
             </div>
@@ -206,7 +206,7 @@ export default function Home() {
           </div>
           {step < 2 && (
             <div className={`h-0.5 w-12 sm:w-20 ml-3 transition-all duration-300 ${
-              currentStep > step ? 'bg-primary' : 'bg-slate-300 dark:bg-slate-700'
+              currentStep > step ? 'bg-primary' : 'bg-border'
             }`} />
           )}
         </div>
@@ -215,14 +215,14 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-b from-background via-card to-background ">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg">
+      <header className="sticky top-0 z-50 w-full border-b bg-card/80 backdrop-blur-lg">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="窩算算" className="w-12 h-12 object-contain" />
             <div>
-              <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                 窩算算
               </h1>
               <p className="text-xs text-muted-foreground">溫暖成家，理性規劃</p>
@@ -231,7 +231,7 @@ export default function Home() {
           <PWAInstallButton
             variant="outline"
             size="sm"
-            className="border-[#5F9EA0] text-[#5F9EA0] hover:bg-[#5F9EA0] hover:text-white transition-colors"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
           />
         </div>
       </header>
@@ -339,7 +339,7 @@ export default function Home() {
                     </div>
 
                     {/* Advanced Options - Second Home */}
-                    <div className="flex items-start justify-between p-4 rounded-lg border bg-slate-50/50 dark:bg-slate-900/50">
+                    <div className="flex items-start justify-between p-4 rounded-lg border bg-muted/50">
                       <div className="flex-1 space-y-1">
                         <Label htmlFor="hasOtherLoan" className="text-base font-medium cursor-pointer">
                           名下已有其他房貸（第二戶）
@@ -358,7 +358,7 @@ export default function Home() {
 
                     {/* Advanced Options - Guarantor */}
                     <div className="space-y-4">
-                      <div className="flex items-start justify-between p-4 rounded-lg border bg-slate-50/50 dark:bg-slate-900/50">
+                      <div className="flex items-start justify-between p-4 rounded-lg border bg-muted/50">
                         <div className="flex-1 space-y-1">
                           <Label htmlFor="hasGuarantor" className="text-base font-medium cursor-pointer">
                             加入保證人/配偶擔保
@@ -391,7 +391,7 @@ export default function Home() {
                                   type="text"
                                   value={formatNumber(guarantorIncome)}
                                   onChange={(e) => setGuarantorIncome(e.target.value.replace(/,/g, ''))}
-                                  className="h-11 pr-10 bg-white dark:bg-slate-950"
+                                  className="h-11 pr-10 bg-card"
                                 />
                                 <span className="absolute right-3 top-3 text-sm text-muted-foreground">元</span>
                               </div>
@@ -407,7 +407,7 @@ export default function Home() {
                                     type="text"
                                     value={formatNumber(guarantorExistingLoan)}
                                     onChange={(e) => setGuarantorExistingLoan(e.target.value.replace(/,/g, ''))}
-                                    className="h-11 pr-10 bg-white dark:bg-slate-950"
+                                    className="h-11 pr-10 bg-card"
                                   />
                                   <span className="absolute right-3 top-3 text-sm text-muted-foreground">元</span>
                                 </div>
@@ -421,7 +421,7 @@ export default function Home() {
                                     type="text"
                                     value={formatNumber(guarantorLivingExpenses)}
                                     onChange={(e) => setGuarantorLivingExpenses(e.target.value.replace(/,/g, ''))}
-                                    className="h-11 pr-10 bg-white dark:bg-slate-950"
+                                    className="h-11 pr-10 bg-card"
                                   />
                                   <span className="absolute right-3 top-3 text-sm text-muted-foreground">元</span>
                                 </div>
@@ -442,7 +442,7 @@ export default function Home() {
                     </Button>
 
                     {/* Clear Data Button */}
-                    <div className="pt-4 border-t border-slate-200 dark:border-slate-700 mt-6">
+                    <div className="pt-4 border-t border-border mt-6">
                       <Button
                         onClick={resetCalculator}
                         variant="outline"
@@ -595,7 +595,7 @@ export default function Home() {
                     </div>
 
                     {/* Clear Data Button */}
-                    <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div className="pt-4 border-t border-border">
                       <Button
                         onClick={resetCalculator}
                         variant="outline"
@@ -617,9 +617,9 @@ export default function Home() {
             {result ? (
               <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500 sticky top-24">
                 <Card className={`border-2 shadow-xl ${
-                  result.status === 'healthy' ? 'border-green-500/50 bg-gradient-to-br from-green-50/50 to-white dark:from-green-950/20 dark:to-slate-950' :
-                  result.status === 'warning' ? 'border-yellow-500/50 bg-gradient-to-br from-yellow-50/50 to-white dark:from-yellow-950/20 dark:to-slate-950' :
-                  'border-red-500/50 bg-gradient-to-br from-red-50/50 to-white dark:from-red-950/20 dark:to-slate-950'
+                  result.status === 'healthy' ? 'border-green-500/50 bg-gradient-to-br from-green-50/50 to-white dark:from-green-950/20 dark:to-background' :
+                  result.status === 'warning' ? 'border-yellow-500/50 bg-gradient-to-br from-yellow-50/50 to-white dark:from-yellow-950/20 dark:to-background' :
+                  'border-red-500/50 bg-gradient-to-br from-red-50/50 to-white dark:from-red-950/20 dark:to-background'
                 }`}>
                   <CardHeader className="pb-4">
                     <div className="flex justify-between items-start">
@@ -631,7 +631,7 @@ export default function Home() {
                         variant="ghost"
                         size="icon"
                         onClick={resetCalculator}
-                        className="hover:bg-slate-100 dark:hover:bg-slate-800"
+                        className="hover:bg-muted"
                       >
                         <Calculator className="h-4 w-4" />
                       </Button>
@@ -671,7 +671,7 @@ export default function Home() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                        <div className="p-4 rounded-lg bg-muted border">
                           <div className="text-xs text-muted-foreground mb-1">每月房貸</div>
                           <div className="text-2xl font-bold">
                             {result.monthlyPayment.toLocaleString()}
@@ -682,7 +682,7 @@ export default function Home() {
                             const interestPortion = Math.round(result.maxLoanAmount * monthlyRate);
                             const principalPortion = result.monthlyPayment - interestPortion;
                             return (
-                              <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                              <div className="mt-2 pt-2 border-t border-border space-y-0.5">
                                 <div className="flex justify-between items-center text-[10px] text-muted-foreground">
                                   <span>本金</span>
                                   <span className="font-medium">{principalPortion.toLocaleString()}</span>
@@ -697,13 +697,13 @@ export default function Home() {
                         </div>
 
                         {parseFloat(gracePeriod) > 0 ? (
-                          <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                          <div className="p-4 rounded-lg bg-muted border">
                             <div className="text-xs text-muted-foreground mb-1">寬限期內</div>
                             <div className="text-2xl font-bold text-green-600">
                               {result.monthlyPaymentGrace.toLocaleString()}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">僅繳利息</div>
-                            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                            <div className="mt-2 pt-2 border-t border-border space-y-0.5">
                               <div className="flex justify-between items-center text-[10px] text-muted-foreground">
                                 <span>寬限期限</span>
                                 <span className="font-medium">{gracePeriod} 年</span>
@@ -711,13 +711,13 @@ export default function Home() {
                             </div>
                           </div>
                         ) : (
-                          <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                          <div className="p-4 rounded-lg bg-muted border">
                             <div className="text-xs text-muted-foreground mb-1">房屋總價</div>
-                            <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">
+                            <div className="text-2xl font-bold text-muted-foreground">
                               {(parseFloat(housePrice)).toLocaleString()}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">萬元</div>
-                            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 space-y-0.5">
+                            <div className="mt-2 pt-2 border-t border-border space-y-0.5">
                               <div className="flex justify-between items-center text-[10px] text-muted-foreground">
                                 <span>貸款成數</span>
                                 <span className="font-medium">{(result.loanPercentage * 100).toFixed(0)}%</span>
@@ -732,11 +732,11 @@ export default function Home() {
                       </div>
 
                       {parseFloat(gracePeriod) > 0 && (
-                        <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border">
+                        <div className="p-3 rounded-lg bg-muted border">
                           <div className="flex justify-between items-center">
                             <div className="space-y-1">
                               <div className="text-xs text-muted-foreground">房屋總價</div>
-                              <div className="text-lg font-bold text-slate-600 dark:text-slate-400">
+                              <div className="text-lg font-bold text-muted-foreground">
                                 {(parseFloat(housePrice)).toLocaleString()} 萬元
                               </div>
                             </div>
@@ -799,7 +799,7 @@ export default function Home() {
 
                 {/* Info Accordion - Below Results */}
                 <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="formula" className="border-2 border-[#5F9EA0]/30 rounded-lg px-4 bg-white dark:bg-slate-950 shadow-sm">
+                  <AccordionItem value="formula" className="border-2 border-primary/30 rounded-lg px-4 bg-card shadow-sm">
                     <AccordionTrigger className="hover:no-underline">
                       <div className="flex items-center gap-2 text-left">
                         <InfoIcon className="h-4 w-4 text-primary shrink-0" />
@@ -810,7 +810,7 @@ export default function Home() {
                       <div className="space-y-4 text-sm text-muted-foreground">
                         <div>
                           <h4 className="font-semibold text-foreground mb-2">收支比定義</h4>
-                          <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border font-mono text-center text-primary font-semibold">
+                          <div className="p-3 rounded-lg bg-muted border font-mono text-center text-primary font-semibold">
                             收支比 = (總月收入 / 總月支出) × 100%
                           </div>
                         </div>
@@ -841,7 +841,7 @@ export default function Home() {
                 </Accordion>
               </div>
             ) : (
-              <div className="hidden lg:flex h-96 items-center justify-center rounded-xl border-2 border-dashed bg-slate-50/50 dark:bg-slate-900/50">
+              <div className="hidden lg:flex h-96 items-center justify-center rounded-xl border-2 border-dashed bg-muted/50">
                 <div className="text-center space-y-3 px-6">
                   <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                     <Calculator className="h-8 w-8 text-primary" />
@@ -855,7 +855,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 py-8 border-t bg-slate-50/50 dark:bg-slate-950/50">
+      <footer className="mt-16 py-8 border-t bg-muted/50">
         <div className="max-w-6xl mx-auto px-4 text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
             <img src="/logo.png" alt="窩算算" className="w-14 h-14 object-contain" />
@@ -870,7 +870,7 @@ export default function Home() {
             href="https://forms.gle/hUiH3yusdAcZgjoQ8"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#5F9EA0]/10 hover:bg-[#5F9EA0]/20 text-[#5F9EA0] hover:text-[#4A7C8C] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary/80 transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
             <span className="text-sm font-medium">窩算算 (WoCalc) 意見回饋</span>

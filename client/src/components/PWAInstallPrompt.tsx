@@ -81,7 +81,7 @@ export default function PWAInstallPrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-md">
-      <Card className="relative bg-gradient-to-br from-[#5F9EA0]/10 to-[#D4A574]/10 backdrop-blur-sm border-[#5F9EA0]/20 shadow-xl">
+      <Card className="relative bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm border-primary/20 shadow-xl">
         <button
           onClick={handleDismiss}
           className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100/50 transition-colors"
@@ -92,12 +92,12 @@ export default function PWAInstallPrompt() {
 
         <div className="p-6">
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[#5F9EA0] flex items-center justify-center">
+            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-primary flex items-center justify-center">
               <Smartphone className="w-6 h-6 text-white" />
             </div>
 
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-[#2C3E50] mb-1">
+              <h3 className="text-lg font-semibold text-foreground mb-1">
                 安裝窩算算到手機
               </h3>
               <p className="text-sm text-gray-600 mb-4">
@@ -109,19 +109,19 @@ export default function PWAInstallPrompt() {
               {isIOS ? (
                 <div className="space-y-2 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center text-xs font-bold">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
                       1
                     </span>
                     <span>點擊下方的「分享」圖示</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center text-xs font-bold">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
                       2
                     </span>
                     <span>向下滾動找到「加入主畫面」</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#5F9EA0] text-white flex items-center justify-center text-xs font-bold">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
                       3
                     </span>
                     <span>點擊「新增」完成安裝</span>
@@ -131,7 +131,7 @@ export default function PWAInstallPrompt() {
                 <div className="flex gap-2">
                   <Button
                     onClick={handleInstall}
-                    className="flex-1 bg-[#5F9EA0] hover:bg-[#5F9EA0]/90 text-white shadow-md"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white shadow-md"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     立即安裝
@@ -139,7 +139,7 @@ export default function PWAInstallPrompt() {
                   <Button
                     onClick={handleDismiss}
                     variant="outline"
-                    className="border-[#5F9EA0]/30 hover:bg-[#5F9EA0]/5"
+                    className="border-primary/30 hover:bg-primary/5"
                   >
                     稍後再說
                   </Button>
