@@ -11,6 +11,14 @@
     <meta name="author" content="WoCalc Team" />
     <title>窩算算 WoCalc | 溫暖成家，理性規劃</title>
 
+    <!-- Open Graph -->
+    <meta property="og:title" content="窩算算 WoCalc | 溫暖成家，理性規劃" />
+    <meta property="og:description" content="專業房貸試算與收支比分析工具，幫助您理性規劃購屋計畫，溫暖成家每一步" />
+    <meta property="og:image" content="https://wocalc.3mi.tw/og-image.png" />
+    <meta property="og:url" content="https://wocalc.3mi.tw" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -23,6 +31,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Nunito:wght@400;600;700;800&family=Varela+Round&display=swap" rel="stylesheet" />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R28K52V7L6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R28K52V7L6');
+    </script>
+
+    <!-- Sentry -->
+    <script src="https://browser.sentry-cdn.com/8.0.0/bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      Sentry.onLoad(function() {
+        Sentry.init({
+          dsn: "https://a00437e739870561f48ebe01b457bde9@o4510497080672256.ingest.us.sentry.io/4511086329397248",
+          tracesSampleRate: 0.1,
+        });
+      });
+    </script>
   </head>
 
   <body>

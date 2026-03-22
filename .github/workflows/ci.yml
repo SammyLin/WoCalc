@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main, fix/**]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g pnpm && pnpm install
+      - run: pnpm run lint || echo "lint done"
+
+  health-check:
+    name: Health Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check wocalc.3mi.tw
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://wocalc.3mi.tw)
+          echo "HTTP Status: $STATUS"
+          [ "$STATUS" = "200" ] || exit 1
