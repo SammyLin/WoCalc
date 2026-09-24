@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { calculateMortgage, MortgageResult } from "@/lib/mortgage-calculator";
-import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, MessageSquare, RotateCcw } from "lucide-react";
+import { Calculator, Home as HomeIcon, DollarSign, TrendingUp, Info as InfoIcon, CheckCircle2, AlertTriangle, XCircle, Sparkles, ArrowRight, ArrowLeft, Check, RotateCcw } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
+import SiteFooter from "@/components/SiteFooter";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 // shadcn/ui components
@@ -855,35 +856,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 py-8 border-t bg-muted/50">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <img src="/logo.png" alt="窩算算" className="w-14 h-14 object-contain" />
-            <div className="text-left">
-              <h3 className="font-bold text-foreground text-lg">窩算算 WoCalc</h3>
-              <p className="text-xs text-muted-foreground">溫暖成家，理性規劃</p>
-            </div>
-          </div>
-
-          {/* 意見回饋連結 */}
-          <a
-            href="https://forms.gle/hUiH3yusdAcZgjoQ8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary/80 transition-colors"
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span className="text-sm font-medium">窩算算 (WoCalc) 意見回饋</span>
-          </a>
-
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} WoCalc. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground/60">
-            試算結果僅供參考，實際核貸條件以銀行最終審核為準
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
